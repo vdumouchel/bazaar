@@ -1,5 +1,5 @@
 //basic react imports
-import React, { Component } from 'react';
+import React from 'react';
 // advanced module imports
 
 import { enquireScreen } from 'enquire-js';

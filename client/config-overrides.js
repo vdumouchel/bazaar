@@ -9,6 +9,21 @@ module.exports = override(
 	}),
 	addLessLoader({
 		javascriptEnabled: true,
-		modifyVars: { '@primary-color': '#000' },
+		modifyVars: {
+			'@primary-color': '#a87169', // primary color for all components
+			'@primary-5': '#E0D3D3',
+			'@link-color': '#57c6de', // link color
+			'@success-color': '#6ce982', // success state color
+			'@warning-color': '#eb5384', // warning state color
+			'@error-color': '#ee4635', // error state color
+			'@font-size-base': ' 14px', // major text font size
+			'@heading-color': 'rgba(164, 39, 35, .85)', // heading text color
+			'@text-color': '#E0D3D3', // major text color
+			'@text-color-secondary': ' rgba(16, 11, 10, .45)', // secondary text color
+			'@disabled-color': 'rgba(16, 11, 10, .25)', // disable state color
+			'@border-radius-base': ' 4px', // major border radius
+			'@border-color-base': '#E0D3D3', // major border color
+			'@box-shadow-base': '0 2px 8px rgba(0, 0, 0, .15)', // major shadow for layers
+		},
 	})
 );

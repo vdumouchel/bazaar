@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 export const signUpValidation = Yup.object().shape({
 	user_first_name: Yup.string()
-		.required('Bazaar users need to provide a first name to sign up. Please do so. ')
+		.required('You must have a name. Please provide one. ')
 		.min(2, 'Your first name is most likely longer than that!'),
 	user_last_name: Yup.string()
 		.required('Bazaar users need to provide a last name to sign up. Please do so.')
