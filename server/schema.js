@@ -98,7 +98,14 @@ module.exports = gql`
 	}
 
 	type Mutation {
-		signUp(user_email: String!, user_password: String!): SignUpResponse
+		signUp(
+			user_first_name: String!
+			user_last_name: String!
+			user_username: String!
+			user_country: String!
+			user_email: String!
+			user_password: String!
+		): SignUpResponse
 		login(user_email: String!, user_password: String!): LoginResponse
 		addItem(
 			user_id: ID

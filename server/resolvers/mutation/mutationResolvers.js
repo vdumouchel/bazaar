@@ -15,19 +15,26 @@ module.exports = {
 	Mutation: {
 		async signUp(parent, input, { req, app, postgres }) {
 			try {
-				// console.log('show me signUp', input);
-
 				let signUpEmail = input.user_email.toLowerCase();
 				let hashedSignUpPassword = await bcrypt.hash(input.user_password, saltRounds);
+
 				const newUserInsert = {
-					text: ' INSERT INTO bazaar.users (user_email, user_password) VALUES ($1, $2) RETURNING *',
-					values: [signUpEmail, hashedSignUpPassword],
+					text:
+						' INSERT INTO bazaar.users (user_first_name, user_last_name, user_username, user_country, user_email, user_password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+					values: [
+						input.user_first_name,
+						input.user_last_name,
+						input.user_username,
+						input.user_country,
+						signUpEmail,
+						hashedSignUpPassword,
+					],
 				};
 				let insertNewUserResult = await postgres.query(newUserInsert);
 				console.log('This is the result of insertNewUser in the Bazaar DB: ', insertNewUserResult);
 
 				if (insertNewUserResult) {
-					signUpMessage = `Amazing! Welcome to Bazaar "${insertNewUserResult.rows[0].user_email}" !`;
+					signUpMessage = `Amazing! Welcome to Bazaar "${insertNewUserResult.rows[0].user_first_name}" !`;
 				} else {
 					signUpMessage = 'Login failed. Please try again!';
 				}

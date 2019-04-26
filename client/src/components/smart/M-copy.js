@@ -1,3 +1,4 @@
+// basic react import
 import React from 'react';
 import gql from 'graphql-tag';
 import * as Yup from 'yup';
@@ -12,7 +13,7 @@ const SIGN_UP_MUTATION = gql`
 	}
 `;
 
-const SignUp = () => {
+const Ant = () => {
 	return (
 		<Mutation
 			mutation={SIGN_UP_MUTATION}
@@ -92,4 +93,4 @@ const SignUp = () => {
 	);
 };
 
-export default SignUp;
+export default Ant;

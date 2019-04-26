@@ -1,25 +1,12 @@
-//basic react imports
+// basic react imports
 import React, { Component } from 'react';
 // advanced module imports
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Link } from 'react-router-dom';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 // css & styles imports
-import '../App.css';
-import Button from 'antd/lib/button';
+import '../../App.css';
 // components imports
-//...//
-
-let listAllAvailableItems = gql`
-	query {
-		listAllAvailableItems {
-			item_id
-			item_name
-			item_price
-			item_description
-		}
-	}
-`;
+import { listAllAvailableItems } from '../gql-queries/gql-queries';
 
 class allItems extends Component {
 	render() {
@@ -30,9 +17,9 @@ class allItems extends Component {
 					if (errors) return <div>Errors {JSON.stringify(errors)}</div>;
 					return (
 						<div className="App">
-							<Button>
+							<button>
 								<Link to="/">Bazaar</Link>
-							</Button>
+							</button>
 							{data.listAllAvailableItems.map(item => (
 								<div key={item.item_id}>{item.item_price}</div>
 							))}

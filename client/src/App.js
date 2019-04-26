@@ -1,18 +1,15 @@
 // basic react imports
 import React, { Component } from 'react';
 // Advanced module imports
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { ApolloProvider } from 'react-apollo';
 import apolloClient from './apolloclient';
 //css & styling imports
 import './App.css';
 // component imports
-import allItems from './components/listAllAvailableItems';
+import landing from './components/dumb/landing';
 import signup from './components/dumb/signup';
-import landing from './components/landing';
-
-import { version, Button } from 'antd';
-import 'antd/dist/antd.css';
+import allItems from './components/dumb/listAllAvailableItems';
 
 class App extends Component {
 	render() {
