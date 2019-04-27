@@ -20,14 +20,14 @@ module.exports = {
 
 				const newUserInsert = {
 					text:
-						' INSERT INTO bazaar.users (user_first_name, user_last_name, user_username, user_country, user_email, user_password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+						' INSERT INTO bazaar.users (user_first_name, user_last_name, user_username, user_email, user_password,user_account_deleted) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
 					values: [
 						input.user_first_name,
 						input.user_last_name,
 						input.user_username,
-						input.user_country,
 						signUpEmail,
 						hashedSignUpPassword,
+						false,
 					],
 				};
 				let insertNewUserResult = await postgres.query(newUserInsert);
@@ -69,7 +69,7 @@ module.exports = {
 				console.log('login is:', comparedPasswords);
 
 				if (comparedPasswords) {
-					loginMessage = 'You did login!';
+					loginMessage = 'You successfully logged in!';
 				} else {
 					loginMessage = 'Login failed. Please try again!';
 				}

@@ -9,8 +9,7 @@ const userSeeds = [
 		user_username: 'simistern',
 		user_email: 'simon@simon.stern',
 		user_password: '$2b$12$keWnhcUZrDCqFNL66SBQCeKKuAsn8xtS0H5qQAGJmFkk4jft0/1iy',
-		user_status: 'online',
-		user_country: 'Canada',
+
 		user_date_joined: '2017-08-15 21:05:15.723336-04',
 		user_account_deleted: false,
 		user_rating: 4.9,
@@ -21,8 +20,6 @@ const userSeeds = [
 		user_username: 'IronA',
 		user_email: 'akshay@akshay.com',
 		user_password: '$2b$12$Icmv1X6pKuV5CS8b5uisgOfhfmggUO94y4LbMumV9Oj1H8NXNRvMa',
-		user_status: 'online',
-		user_country: 'Canada',
 		user_date_joined: '2019-03-02 17:33:12.723336-04',
 		user_account_deleted: false,
 		user_rating: 4.4,

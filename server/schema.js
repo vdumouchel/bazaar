@@ -10,7 +10,6 @@ module.exports = gql`
 		user_username: String
 		user_email: String
 		user_password: String
-		user_status: String
 		user_date_joined: Date
 		user_account_deleted: Boolean
 		user_rating: Float
@@ -74,7 +73,6 @@ module.exports = gql`
 			user_last_name: String
 			user_username: String
 			user_email: String
-			user_country: String
 			user_rating: Float
 		): [User]
 		listAllUsers: [User]!
@@ -102,7 +100,6 @@ module.exports = gql`
 			user_first_name: String!
 			user_last_name: String!
 			user_username: String!
-			user_country: String!
 			user_email: String!
 			user_password: String!
 		): SignUpResponse

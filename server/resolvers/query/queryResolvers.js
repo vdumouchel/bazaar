@@ -24,13 +24,12 @@ module.exports = {
 			let userLastName = input.user_last_name;
 			let userUsername = input.user_username;
 			let userEmail = input.user_email;
-			let userCountry = input.user_country;
 			let userRating = input.user_rating;
 
 			const searchUserPsql = {
 				text:
-					'SELECT * FROM bazaar.users WHERE user_first_name = $1 OR user_last_name = $2 OR user_username = $3 OR user_email = $4 OR user_country = $5 OR user_rating = $6',
-				values: [userFirstName, userLastName, userUsername, userEmail, userCountry, userRating],
+					'SELECT * FROM bazaar.users WHERE user_first_name = $1 OR user_last_name = $2 OR user_username = $3 OR user_email = $4 OR user_rating = $5',
+				values: [userFirstName, userLastName, userUsername, userEmail, userRating],
 			};
 			const searchUser = await postgres.query(searchUserPsql);
 			console.log('this is the specificUser.rows: ', searchUser.rows);

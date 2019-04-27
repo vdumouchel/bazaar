@@ -1,59 +1,16 @@
 // basic react imports
 import React from 'react';
-import { Formik, FormikErrors } from 'formik';
+import { Formik } from 'formik';
 import { Mutation } from 'react-apollo';
 // css & styles imports
 import 'antd/dist/antd.less';
 import '../../css/signup.less';
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button } from 'antd';
+import { Form, Input, Icon, Checkbox, Button } from 'antd';
 // components imports
 import { signUpMutation } from '../gql-mutations/gql-mutations';
 import { signUpValidation } from '../yup-validation/yupValidation';
 
-//declaring variables
-const residences = [
-	{
-		value: 'zhejiang',
-		label: 'Zhejiang',
-		children: [
-			{
-				value: 'hangzhou',
-				label: 'Hangzhou',
-				children: [
-					{
-						value: 'xihu',
-						label: 'West Lake',
-					},
-				],
-			},
-		],
-	},
-	{
-		value: 'jiangsu',
-		label: 'Jiangsu',
-		children: [
-			{
-				value: 'nanjing',
-				label: 'Nanjing',
-				children: [
-					{
-						value: 'zhonghuamen',
-						label: 'Zhong Hua Men',
-					},
-				],
-			},
-		],
-	},
-];
-
-interface FormValues {
-	user_email: string;
-	user_password: string;
-}
-
-interface Props {
-	submit: (values: FormValues) => Promise<FormikErrors<FormValues> | null>;
-}
+// declaring variables
 
 const formItemLayout = {
 	labelCol: {
@@ -63,18 +20,6 @@ const formItemLayout = {
 	wrapperCol: {
 		xs: { span: 24 },
 		sm: { span: 24 },
-	},
-};
-const tailFormItemLayout = {
-	wrapperCol: {
-		xs: {
-			span: 24,
-			offset: 0,
-		},
-		sm: {
-			span: 16,
-			offset: 8,
-		},
 	},
 };
 
@@ -95,11 +40,22 @@ const SignUp = () => {
 			{(signup, { data }) => (
 				<Formik
 					initialValues={{
+						user_first_name: '',
+						user_last_name: '',
+						user_username: '',
 						user_email: '',
 						user_password: '',
 					}}
 					onSubmit={(values, { setSubmitting }) => {
-						signup({ variables: { user_email: values.user_email, user_password: values.user_password } });
+						signup({
+							variables: {
+								user_first_name: values.user_first_name,
+								user_last_name: values.user_last_name,
+								user_username: values.user_username,
+								user_email: values.user_email,
+								user_password: values.user_password,
+							},
+						});
 						setSubmitting(false);
 					}}
 					validationSchema={signUpValidation}
@@ -108,6 +64,63 @@ const SignUp = () => {
 						const { errors, handleChange, handleBlur, handleSubmit, isSubmitting, touched, values } = props;
 						return (
 							<Form {...formItemLayout} onSubmit={handleSubmit}>
+								<Form.Item>
+									<Input
+										id="user_first_name"
+										placeholder="First Name"
+										type="user_first_name"
+										prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+										value={values.user_first_name}
+										onChange={handleChange}
+										onBlur={handleBlur}
+										className={
+											errors.user_first_name && touched.user_first_name
+												? 'text-input error'
+												: 'text-input'
+										}
+									/>
+									{errors.user_first_name && touched.user_first_name && (
+										<div className="input-feedback">{errors.user_first_name}</div>
+									)}
+								</Form.Item>
+								<Form.Item>
+									<Input
+										id="user_last_name"
+										placeholder="Last Name"
+										type="user_last_name"
+										prefix={<Icon type="team" style={{ color: 'rgba(0,0,0,.25)' }} />}
+										value={values.user_last_name}
+										onChange={handleChange}
+										onBlur={handleBlur}
+										className={
+											errors.user_last_name && touched.user_last_name
+												? 'text-input error'
+												: 'text-input'
+										}
+									/>
+									{errors.user_last_name && touched.user_last_name && (
+										<div className="input-feedback">{errors.user_last_name}</div>
+									)}
+								</Form.Item>
+								<Form.Item>
+									<Input
+										id="user_username"
+										placeholder="Username"
+										type="user_username"
+										prefix={<Icon type="star" style={{ color: 'rgba(0,0,0,.25)' }} />}
+										value={values.user_username}
+										onChange={handleChange}
+										onBlur={handleBlur}
+										className={
+											errors.user_username && touched.user_username
+												? 'text-input error'
+												: 'text-input'
+										}
+									/>
+									{errors.user_username && touched.user_username && (
+										<div className="input-feedback">{errors.user_username}</div>
+									)}
+								</Form.Item>
 								<Form.Item>
 									<Input
 										id="user_email"
@@ -145,15 +158,21 @@ const SignUp = () => {
 									)}
 								</Form.Item>
 
-								<Button
-									type="primary"
-									style={{ marginTop: 10 }}
-									htmlType="submit"
-									disabled={isSubmitting}
-									className="login-form-button"
-								>
-									Create an account
-								</Button>
+								<Form.Item>
+									<span className="login-form-forgot" href="">
+										<Checkbox>
+											I accept Bazaar's <a>Terms & Policy</a>
+										</Checkbox>
+									</span>
+									<Button
+										type="primary"
+										htmlType="submit"
+										className="login-form-button"
+										disabled={isSubmitting}
+									>
+										Create an account
+									</Button>
+								</Form.Item>
 							</Form>
 						);
 					}}

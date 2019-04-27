@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // advanced module imports
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 // css & styles immports
 import 'antd/dist/antd.less';
@@ -11,27 +11,30 @@ import '../../css/signup.less';
 import { Card, Icon, Col } from 'antd';
 
 // components imports
-import SignUp from '../smart/SignUp';
+import LogIn from '../smart/LogIn';
 import { genie } from '../../img/svg';
 
 //declaring variables
 const Genie = props => <Icon component={genie} {...props} />;
 
-class signup extends Component {
+class login extends Component {
+	constructor(props) {
+		super(props);
+	}
 	render() {
 		return (
 			<div style={{ width: 456, margin: 'auto' }}>
 				<Card className="card">
-					<Col span={12} offset={6} style={{ textAlign: 'center' }}>
+					<Col span={18} offset={3} style={{ textAlign: 'center' }}>
 						<Genie />
-						<h1>Sign Up</h1>
+						<h1>Welcome back!</h1>
 					</Col>
-					<SignUp />
+					<LogIn />
 				</Card>
 				<Card style={{ textAlign: 'center', marginTop: 20 }}>
-					Already a Bazaar techie? &nbsp;
-					<Link to="/login">
-						<span>Log in</span>
+					Not a Bazaar techie yet? &nbsp;
+					<Link to="/signup">
+						<span>Create an account</span>
 					</Link>
 				</Card>
 			</div>
@@ -39,4 +42,4 @@ class signup extends Component {
 	}
 }
 
-export default signup;
+export default login;

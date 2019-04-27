@@ -7,15 +7,20 @@ import DocumentTitle from 'react-document-title';
 // css & styles imports
 import '../../App.css';
 import '../../landingpage/static/style';
+
 // components imports
 
 import Landing from '../../landingpage/Landing.jsx';
+
+//declare variables
 
 let isMobile;
 
 enquireScreen(b => {
 	isMobile = b;
 });
+
+//declare function
 
 class landing extends React.PureComponent {
 	state = {

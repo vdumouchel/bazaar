@@ -8,8 +8,6 @@ exports.up = pgm => {
       "user_username" VARCHAR (64) UNIQUE,
       "user_email" TEXT UNIQUE NOT NULL,
       "user_password" TEXT NOT NULL,
-      "user_status" VARCHAR (64),
-      "user_country" VARCHAR (64),
       "user_date_joined" DATE DEFAULT CURRENT_TIMESTAMP,
       "user_account_deleted" BOOL,
       "user_rating" NUMERIC (2,1)

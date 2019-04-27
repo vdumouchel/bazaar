@@ -28,14 +28,14 @@ function Landing(props) {
 				<Logo style={{ paddingTop: 8 }} />
 				<p key="content">
 					{' '}
-					&#60; Everyday, we make your techie gear wishes come true. Not to worry, there isn't a limit of 3 :P
+					&#60; Everyday, we make your techy gear wishes come true. Not to worry, there isn't a limit of 3 :P
 					/&#62;{' '}
 				</p>
 				<div key="button" className="button-wrapper">
 					<Link to="/signup">
 						<Button type="primary">Create an account</Button>
 					</Link>
-					<Link>
+					<Link to="/login">
 						<Button style={{ margin: '0 16px' }} type="primary" ghost>
 							Log in
 						</Button>
