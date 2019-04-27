@@ -40,6 +40,7 @@ const LogIn = history => {
 				if (data.login.message === 'You successfully logged in!') {
 					alert(`${data.login.message}`);
 					console.log(history);
+					history.push('/'); // expected behaviour --> Should redirect to landing page just for fun! cause I don't have a page for Bazaar dashboard yet
 				} else {
 					alert(`Login failed. Incorrect password. Please try again!`);
 				}
