@@ -10,7 +10,6 @@ module.exports = gql`
 		user_username: String
 		user_email: String
 		user_password: String
-		user_status: String
 		user_date_joined: Date
 		user_account_deleted: Boolean
 		user_rating: Float
@@ -29,10 +28,8 @@ module.exports = gql`
 		item_id: ID!
 		item_name: String
 		item_type: String
-		# item_type(size: TypesOfItems): String
 		item_status: String
 		item_price: Float
-		item_currency: String
 		item_quantity_avail: Int
 		item_description: String
 		item_thumbnail_url: String
@@ -74,7 +71,6 @@ module.exports = gql`
 			user_last_name: String
 			user_username: String
 			user_email: String
-			user_country: String
 			user_rating: Float
 		): [User]
 		listAllUsers: [User]!
@@ -98,15 +94,21 @@ module.exports = gql`
 	}
 
 	type Mutation {
-		signUp(user_email: String!, user_password: String!): SignUpResponse
+		signUp(
+			user_first_name: String!
+			user_last_name: String!
+			user_username: String!
+			user_email: String!
+			user_password: String!
+		): SignUpResponse
 		login(user_email: String!, user_password: String!): LoginResponse
+		logout: logoutResponse
 		addItem(
 			user_id: ID
 			item_name: String!
 			item_type: String!
 			item_status: String
 			item_price: Float!
-			item_currency: String!
 			item_quantity_avail: Int!
 			item_description: String
 			item_thumbnail_url: String
@@ -130,7 +132,6 @@ module.exports = gql`
 			item_type: String
 			item_status: String
 			item_price: Float
-			item_currency: String
 			item_quantity_avail: Int
 			item_description: String
 			item_thumbnail_url: String
@@ -181,5 +182,9 @@ module.exports = gql`
 	type addUserRatingResponse {
 		message: String
 		user_rating: user_rating
+	}
+
+	type logoutResponse {
+		message: String
 	}
 `;

@@ -15,19 +15,38 @@ module.exports = {
 	Mutation: {
 		async signUp(parent, input, { req, app, postgres }) {
 			try {
-				// console.log('show me signUp', input);
-
 				let signUpEmail = input.user_email.toLowerCase();
 				let hashedSignUpPassword = await bcrypt.hash(input.user_password, saltRounds);
+
 				const newUserInsert = {
-					text: ' INSERT INTO bazaar.users (user_email, user_password) VALUES ($1, $2) RETURNING *',
-					values: [signUpEmail, hashedSignUpPassword],
+					text:
+						' INSERT INTO bazaar.users (user_first_name, user_last_name, user_username, user_email, user_password,user_account_deleted) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+					values: [
+						input.user_first_name,
+						input.user_last_name,
+						input.user_username,
+						signUpEmail,
+						hashedSignUpPassword,
+						false,
+					],
 				};
 				let insertNewUserResult = await postgres.query(newUserInsert);
-				console.log('This is the result of insertNewUser in the Bazaar DB: ', insertNewUserResult);
+
+				let myjwttoken = await jwt.sign(
+					{
+						data: insertNewUserResult.rows[0].user_id,
+						exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+					},
+					'secret'
+				);
+
+				req.res.cookie('bazaar_app', myjwttoken, {
+					httpOnly: true,
+					secure: process.env.NODE_ENV === 'production',
+				});
 
 				if (insertNewUserResult) {
-					signUpMessage = `Amazing! Welcome to Bazaar "${insertNewUserResult.rows[0].user_email}" !`;
+					signUpMessage = `Amazing! Welcome to Bazaar!`;
 				} else {
 					signUpMessage = 'Login failed. Please try again!';
 				}
@@ -43,26 +62,36 @@ module.exports = {
 
 		async login(parent, input, { req, app, postgres }) {
 			try {
-				console.log('show me Login', input);
 				let loginEmail = input.user_email.toLowerCase();
-				console.log('this is the login email', loginEmail);
+
 				let loginPassword = input.user_password;
-				console.log('password used for login:', loginPassword);
+
 				const emailFromUser = {
-					text: 'SELECT user_password FROM bazaar.users WHERE user_email = $1',
+					text: 'SELECT user_id, user_password FROM bazaar.users WHERE user_email = $1',
 					values: [loginEmail],
 				};
-				console.log(emailFromUser);
+
 				let dbEmailQuery = await postgres.query(emailFromUser);
-				console.log(dbEmailQuery);
-				console.log('Database Email Query returns: ', dbEmailQuery.rows[0].user_password);
 
 				let comparedPasswords = await bcrypt.compare(loginPassword, dbEmailQuery.rows[0].user_password);
 
-				console.log('login is:', comparedPasswords);
+				console.log('this is dbEmailQuery user_id: ', dbEmailQuery.rows[0].user_id);
 
 				if (comparedPasswords) {
-					loginMessage = 'You did login!';
+					let myjwttoken = await jwt.sign(
+						{
+							data: dbEmailQuery.rows[0].user_id,
+							exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
+						},
+						'secret'
+					);
+
+					req.res.cookie('bazaar_app', myjwttoken, {
+						httpOnly: true,
+						secure: process.env.NODE_ENV === 'production',
+					});
+
+					loginMessage = 'You successfully logged in!';
 				} else {
 					loginMessage = 'Login failed. Please try again!';
 				}
@@ -70,7 +99,22 @@ module.exports = {
 				return {
 					message: loginMessage,
 				};
-			} catch {
+			} catch (e) {
+				console.error('Sorry! This returned an error of: ', e.message);
+				throw e.message;
+			}
+		},
+
+		async logout(parent, input, { req, app, postgres }) {
+			try {
+				req.clearCookie('bazaar_app');
+
+				logoutMessage = 'You successfully logged out!';
+				console.log(req.cookies);
+				return {
+					message: logoutMessage,
+				};
+			} catch (e) {
 				console.error('Sorry! This returned an error of: ', e.message);
 				throw e.message;
 			}
@@ -79,12 +123,12 @@ module.exports = {
 		async addItem(parent, input, { req, app, postgres }) {
 			try {
 				console.log('Showing addItem input', input);
-				let userId = input.user_id;
+				let userId = authenticate(app, req);
+				// let userId = input.user_id;
+				console.log('this is userId from authenticate(): ', userId);
 				let itemName = input.item_name;
 				let itemType = input.item_type;
-				let itemStatus = input.item_status;
 				let itemPrice = input.item_price;
-				let itemCurrency = input.item_currency;
 				let itemQuantityAvail = input.item_quantity_avail;
 				let itemDescription = input.item_description;
 				let itemThumbnail = input.item_thumbnail_url;
@@ -93,18 +137,17 @@ module.exports = {
 				// psql command
 				const addItemInsert = {
 					text:
-						' INSERT INTO bazaar.items (item_name, item_type, item_status, item_price, item_currency, item_quantity_avail, item_description, item_thumbnail_url, item_condition, item_owner_id, item_quantity_sold) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *',
+						' INSERT INTO bazaar.items (item_name, item_type, item_status, item_price, item_quantity_avail, item_description, item_thumbnail_url, item_condition, item_owner_id, item_quantity_sold) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *',
 					values: [
 						itemName,
 						itemType,
-						itemStatus,
+						'available',
 						itemPrice,
-						itemCurrency,
 						itemQuantityAvail,
 						itemDescription,
 						itemThumbnail,
 						itemCondition,
-						userId,
+						1,
 						0,
 					],
 				};
@@ -182,7 +225,8 @@ module.exports = {
 				if (itemQuantity > 0) {
 					// declaring input variables
 					let itemId = input.item_id;
-					let itemBuyer = input.user_id;
+					// let itemBuyer = authenticate(app, req);
+					let itemBuyer = 1;
 
 					// importing a decrementing quantity function
 					let itemUpdatedQuantity = await quantityAvail(itemQuantity);
@@ -223,7 +267,7 @@ module.exports = {
 
 					transaction = transactionDBQuery.rows[0];
 					//declaring success messages and error messages
-					message = `Amazing. You just bought item name: ${transaction.transaction_item_name} .`;
+					message = `Amazing! You just bought this Bazaar item!`;
 				} else {
 					message = `Sorry. This item is currently unavailable.`;
 				}
@@ -274,9 +318,9 @@ module.exports = {
 						input.item_id
 					} : with the following modifications: ${input.item_name} ${input.item_type} ${input.item_status} ${
 						input.item_price
-					} ${input.item_currency} ${input.item_quantity_avail} ${input.item_description} ${
-						input.item_thumbnail_url
-					} ${input.item_description}`,
+					}${input.item_quantity_avail} ${input.item_description} ${input.item_thumbnail_url} ${
+						input.item_description
+					}`,
 					updatedItem: updateItemDB.rows,
 				};
 			} catch (e) {

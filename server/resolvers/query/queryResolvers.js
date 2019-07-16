@@ -24,13 +24,12 @@ module.exports = {
 			let userLastName = input.user_last_name;
 			let userUsername = input.user_username;
 			let userEmail = input.user_email;
-			let userCountry = input.user_country;
 			let userRating = input.user_rating;
 
 			const searchUserPsql = {
 				text:
-					'SELECT * FROM bazaar.users WHERE user_first_name = $1 OR user_last_name = $2 OR user_username = $3 OR user_email = $4 OR user_country = $5 OR user_rating = $6',
-				values: [userFirstName, userLastName, userUsername, userEmail, userCountry, userRating],
+					'SELECT * FROM bazaar.users WHERE user_first_name = $1 OR user_last_name = $2 OR user_username = $3 OR user_email = $4 OR user_rating = $5',
+				values: [userFirstName, userLastName, userUsername, userEmail, userRating],
 			};
 			const searchUser = await postgres.query(searchUserPsql);
 			console.log('this is the specificUser.rows: ', searchUser.rows);
@@ -42,7 +41,6 @@ module.exports = {
 		},
 
 		async listAllUsers(parent, _, { app, req, postgres }, info) {
-			authenticate(app, req);
 			const allUsersPsql = {
 				text: 'SELECT * FROM bazaar.users',
 			};
@@ -94,14 +92,17 @@ module.exports = {
 		///// ITEMS
 
 		async listAllAvailableItems(parent, _, { app, req, postgres }, info) {
-			authenticate(app, req);
+			const user_id = authenticate(app, req);
+			if (user_id === null || user_id === false) {
+				throw 'There is no user logged in';
+			} else {
+			}
 			const allItemsPsql = {
 				text: 'SELECT * from bazaar.items',
 			};
 
 			const allItems = await postgres.query(allItemsPsql);
-			console.log('This is allItems from listAllAvailableItems: ', allItems.rows);
-
+			console.log(allItems.rows[0]);
 			if (allItems.rows.length < 1) {
 				throw 'No items in Bazaar at the moment.';
 			}
@@ -126,7 +127,6 @@ module.exports = {
 			};
 
 			const allItems = await postgres.query(specificItemPsql);
-			console.log('This is allItems: ', allItems);
 
 			if (allItems.rows.length < 1) {
 				throw 'Unfortunately, there is no items meeting your criteria.';

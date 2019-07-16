@@ -9,8 +9,7 @@ const userSeeds = [
 		user_username: 'simistern',
 		user_email: 'simon@simon.stern',
 		user_password: '$2b$12$keWnhcUZrDCqFNL66SBQCeKKuAsn8xtS0H5qQAGJmFkk4jft0/1iy',
-		user_status: 'online',
-		user_country: 'Canada',
+
 		user_date_joined: '2017-08-15 21:05:15.723336-04',
 		user_account_deleted: false,
 		user_rating: 4.9,
@@ -21,8 +20,6 @@ const userSeeds = [
 		user_username: 'IronA',
 		user_email: 'akshay@akshay.com',
 		user_password: '$2b$12$Icmv1X6pKuV5CS8b5uisgOfhfmggUO94y4LbMumV9Oj1H8NXNRvMa',
-		user_status: 'online',
-		user_country: 'Canada',
 		user_date_joined: '2019-03-02 17:33:12.723336-04',
 		user_account_deleted: false,
 		user_rating: 4.4,
@@ -35,7 +32,6 @@ const itemSeeds = [
 		item_type: 'Water Sports',
 		item_status: 'available',
 		item_price: 1000.15,
-		item_currency: 'CAD',
 		item_quantity_avail: 3,
 		item_description:
 			"Ready to tackle just about anything, from flatwater to fitness to surfing and even SUP yoga. This Taiga's stable design suits beginners on calm water or paddlers venturing into surfier conditions. It tracks superbly, letting you develop skills and efficient strokes on either side. <br /> Clear coat finish uses tri-layer fibreglass epoxy resin. Lightweight EPS foam core with 5-layer reinforced sidewalls. Deck pad makes touring days more comfortable.",
@@ -53,7 +49,6 @@ const itemSeeds = [
 		item_type: 'Cars',
 		item_status: 'available',
 		item_price: 1800.0,
-		item_currency: 'CAD',
 		item_quantity_avail: 1,
 		item_description:
 			'Want a great running car that is practically theft proof? Meet No-Thrill. Trunk does not open. Gas door is stuck open. You will make a lot of friends as everyone honks and gestures to let you know the gas door is open. Several panels are different shades of black. Some matte, some shiny. Call it abstract art. Shakes like it has withdrawal symptoms if you drive over 65 Km/h. Best offer only, accepting 24k gold as well. Holla for a grand tour with it.',
