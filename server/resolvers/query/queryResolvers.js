@@ -41,7 +41,6 @@ module.exports = {
 		},
 
 		async listAllUsers(parent, _, { app, req, postgres }, info) {
-			authenticate(app, req);
 			const allUsersPsql = {
 				text: 'SELECT * FROM bazaar.users',
 			};
@@ -93,14 +92,17 @@ module.exports = {
 		///// ITEMS
 
 		async listAllAvailableItems(parent, _, { app, req, postgres }, info) {
-			authenticate(app, req);
+			const user_id = authenticate(app, req);
+			if (user_id === null || user_id === false) {
+				throw 'There is no user logged in';
+			} else {
+			}
 			const allItemsPsql = {
 				text: 'SELECT * from bazaar.items',
 			};
 
 			const allItems = await postgres.query(allItemsPsql);
-			console.log('This is allItems from listAllAvailableItems: ', allItems.rows);
-
+			console.log(allItems.rows[0]);
 			if (allItems.rows.length < 1) {
 				throw 'No items in Bazaar at the moment.';
 			}
@@ -125,7 +127,6 @@ module.exports = {
 			};
 
 			const allItems = await postgres.query(specificItemPsql);
-			console.log('This is allItems: ', allItems);
 
 			if (allItems.rows.length < 1) {
 				throw 'Unfortunately, there is no items meeting your criteria.';

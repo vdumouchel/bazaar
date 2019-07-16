@@ -28,10 +28,8 @@ module.exports = gql`
 		item_id: ID!
 		item_name: String
 		item_type: String
-		# item_type(size: TypesOfItems): String
 		item_status: String
 		item_price: Float
-		item_currency: String
 		item_quantity_avail: Int
 		item_description: String
 		item_thumbnail_url: String
@@ -104,13 +102,13 @@ module.exports = gql`
 			user_password: String!
 		): SignUpResponse
 		login(user_email: String!, user_password: String!): LoginResponse
+		logout: logoutResponse
 		addItem(
 			user_id: ID
 			item_name: String!
 			item_type: String!
 			item_status: String
 			item_price: Float!
-			item_currency: String!
 			item_quantity_avail: Int!
 			item_description: String
 			item_thumbnail_url: String
@@ -134,7 +132,6 @@ module.exports = gql`
 			item_type: String
 			item_status: String
 			item_price: Float
-			item_currency: String
 			item_quantity_avail: Int
 			item_description: String
 			item_thumbnail_url: String
@@ -185,5 +182,9 @@ module.exports = gql`
 	type addUserRatingResponse {
 		message: String
 		user_rating: user_rating
+	}
+
+	type logoutResponse {
+		message: String
 	}
 `;

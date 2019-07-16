@@ -21,7 +21,7 @@ body {
 	font-size: 14px !important;
 	line-height: 1.5;
 	color: #24292e;
-	background-color: #fef3f0;
+	background-color: #fdded8 !important;
 	max-width: 100%;
 }
 
@@ -47,7 +47,7 @@ code {
 
 .App {
 	font-family: 'regular';
-	background-color: #fef3f0;
+	background-color: #fdded8;
 	min-height: 1200px;
 }
 

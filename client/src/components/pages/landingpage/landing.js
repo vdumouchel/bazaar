@@ -5,12 +5,12 @@ import React from 'react';
 import { enquireScreen } from 'enquire-js';
 import DocumentTitle from 'react-document-title';
 // css & styles imports
-import '../../App.css';
-import '../../landingpage/static/style';
+import '../../../App.css';
+import './static/style';
 
 // components imports
 
-import Landing from '../../landingpage/Landing.jsx';
+import Landing from './Landing.jsx';
 
 //declare variables
 

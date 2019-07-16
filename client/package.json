@@ -31,8 +31,11 @@
 		"react-document-title": "^2.0.3",
 		"react-dom": "^16.8.6",
 		"react-github-button": "^0.1.11",
+		"react-number-format": "^4.0.7",
 		"react-router-dom": "^5.0.0",
 		"react-scripts": "3.0.0",
+		"request": "^2.88.0",
+		"request-promise": "^4.2.4",
 		"styled-components": "^4.2.0",
 		"yup": "^0.27.0"
 	},

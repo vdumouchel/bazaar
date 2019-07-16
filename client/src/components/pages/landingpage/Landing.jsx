@@ -1,17 +1,22 @@
+// basic react imports
 import React from 'react';
+// advanced module imports
 import PropTypes from 'prop-types';
 import GitHubButton from 'react-github-button';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
-import { Button, Icon } from 'antd';
-import { logo } from '../img/svg';
-import { lampgear } from '../img/svg';
 import { Link } from 'react-router-dom';
+// css & style imports
+import { Button, Icon } from 'antd';
+import { logo } from '../../../img/svg';
+import { lampgear } from '../../../img/svg';
 
+// declaring variables
 const Logo = props => <Icon component={logo} {...props} />;
 const Lampgear = props => <Icon component={lampgear} {...props} />;
 
-function Landing(props) {
+//declaring React component
+const Landing = props => {
 	return (
 		<div className="banner-wrapper">
 			{props.isMobile && (
@@ -25,7 +30,7 @@ function Landing(props) {
 				<div key="line" className="title-line-wrapper">
 					<div className="title-line" style={{ transform: 'translateX(-64px)' }} />
 				</div>
-				<Logo style={{ paddingTop: 8 }} />
+				<Logo style={{ paddingTop: 8, fontSize: 200 }} />
 				<p key="content">
 					{' '}
 					&#60; Everyday, we make your techy gear wishes come true. Not to worry, there isn't a limit of 3 :P
@@ -50,7 +55,7 @@ function Landing(props) {
 			)}
 		</div>
 	);
-}
+};
 
 Landing.propTypes = {
 	isMobile: PropTypes.bool.isRequired,

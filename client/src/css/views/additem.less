@@ -1,11 +1,11 @@
-@import './default.less';
-@import './overrides.less';
+@import '../default.less';
+@import '../overrides.less';
 
 body {
-	background-color: #fef3f0;
+	background-color: #fdded8;
 }
-.login-form-button {
-	width: 100%;
+.login-form-button sell {
+	width: 50%;
 	font-family: 'medium';
 	font-size: 17px;
 	margin-top: 20px;
@@ -34,8 +34,8 @@ input:hover {
 	margin-bottom: 0;
 }
 
-.card {
-	margin-top: 150px;
+.cardAddItem {
+	margin-top: 30px;
 }
 
 .login-form-forgot {
@@ -45,4 +45,19 @@ input:hover {
 .input-feedback {
 	margin-top: 0.05em;
 	line-height: 15px;
+}
+.addItem {
+	margin-top: 20px;
+	color: #a87169;
+	border-color: #a87169;
+}
+.ant-btn:not([disabled]):hover {
+	margin-top: 20px;
+	color: #a87169;
+	border-color: #a87169;
+}
+.ant-upload.ant-upload-drag:hover {
+	border: 1.5px solid #a87169;
+	transition: none !important;
+	transform: none;
 }

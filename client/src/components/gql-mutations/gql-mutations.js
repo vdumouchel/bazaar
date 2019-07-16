@@ -27,3 +27,52 @@ export const LogInMutation = gql`
 		}
 	}
 `;
+
+export const LogoutMutation = gql`
+	mutation LogoutMutation {
+		logout {
+			message
+		}
+	}
+`;
+
+export const addItemMutation = gql`
+	mutation addItemMutation(
+		$item_name: String!
+		$item_type: String!
+		$item_price: Float!
+		$item_quantity_avail: Int!
+		$item_description: String
+		$item_condition: String
+	) {
+		addItem(
+			item_name: $item_name
+			item_type: $item_type
+			item_price: $item_price
+			item_quantity_avail: $item_quantity_avail
+			item_description: $item_description
+			item_condition: $item_condition
+		) {
+			message
+		}
+	}
+`;
+
+export const buyItemMutation = gql`
+	mutation buyItemMutation($item_id: ID!) {
+		buyItem(item_id: $item_id) {
+			message
+			item {
+				item_id
+				item_name
+				item_price
+			}
+			transaction {
+				transaction_id
+				transaction_date
+				transaction_item_id
+				transaction_item_buyer_id
+			}
+		}
+	}
+`;

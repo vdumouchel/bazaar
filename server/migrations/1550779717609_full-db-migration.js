@@ -19,7 +19,6 @@ exports.up = pgm => {
       "item_type" VARCHAR (64),
       "item_status" VARCHAR (64),
       "item_price" NUMERIC (9,2),
-      "item_currency" VARCHAR (64),
       "item_quantity_avail" NUMERIC (9,0),
       "item_description" VARCHAR (999),
       "item_thumbnail_url" VARCHAR (999),
